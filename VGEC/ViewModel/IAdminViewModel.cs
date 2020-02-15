@@ -8,7 +8,7 @@ namespace VGEC.ViewModel
 {
     public interface IAdminViewModel
     {
-         bool Authenticate(IPerson person);
+        bool Authenticate(IPerson person);
         IEnumerable<Faculty> GetAllFacuilty();
 
         void AddFaculty(Faculty faculty);
@@ -19,6 +19,7 @@ namespace VGEC.ViewModel
         Faculty GetFaculty(int fac_id);
 
         bool DeleteFaculty(int fac_id);
-        IEnumerable<Faculty> GetAssignMentor();
+        FacMentor GetAssignMentor();
+        bool AssignMentor(Mentor m);
     }
 }

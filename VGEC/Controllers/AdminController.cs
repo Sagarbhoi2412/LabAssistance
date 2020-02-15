@@ -77,11 +77,11 @@ namespace VGEC.Controllers
             return View(adminviewmodal.GetAssignMentor());
         }
         [HttpPost]
-        public ActionResult AssignMentor(Faculty f)
+        public ActionResult AssignMentor(Mentor m)
         {
-            TempData["add"] = "Faculty Added Sucessfully";
-            adminviewmodal.AddFaculty(f);
-            return View(adminviewmodal.GetAllFacuilty());
+            TempData["add"] = "Mentor Assign Sucessfully";
+            adminviewmodal.AssignMentor(m);
+            return View(adminviewmodal.GetAssignMentor());
         }
 
         public ActionResult Edit(int id)

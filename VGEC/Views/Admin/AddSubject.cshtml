@@ -97,7 +97,7 @@
         <div class="col-sm-4">
         </div>
         <div class="col-sm-4">
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn btn-default">Add Subject</button>
         </div>
         <div class="col-sm-4">
         </div>
@@ -124,14 +124,16 @@
         int i = 1;
         foreach (var item in Model)
         {
-            <tr>
-                <td>@i</td>
-                <td>@item.Subject_Name</td>
-                <td>@item.Sub_Code</td>
-                <td>@item.Semester</td>
-                <td>@item.IsElective</td>
-                <td>@item.IsActive</td>
-            </tr>
+    <tr>
+        <td>@i</td>
+        <td>@item.Subject_Name</td>
+        <td>@item.Sub_Code</td>
+        <td>@item.Semester</td>
+        <td>@item.IsElective</td>
+        <td>@item.IsActive</td>
+        <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id})</td>
+        <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })</td>
+    </tr>
             i++;
         }
 

@@ -27,6 +27,22 @@ namespace VGEC.ViewModel
             db.SaveChanges();
         }
 
+        public bool AssignMentor(Mentor m)
+        {
+            var fac = GetFaculty(m.Fac_Id);
+            m.UserName = fac.UserName;
+            try
+            {
+                db.mentors.Add(m);
+                db.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool Authenticate(IPerson person) 
         {
           var check=  db.admins.FirstOrDefault(x=>x.UserName.Equals(person.UserName) && x.Password.Equals(person.Password));
@@ -40,6 +56,7 @@ namespace VGEC.ViewModel
             try
             {
                 db.faculties.Remove(GetFaculty(fac_id));
+                db.mentors.Remove(db.mentors.Find(fac_id));
                 db.SaveChanges();
             }
             catch
@@ -73,7 +90,7 @@ namespace VGEC.ViewModel
             return db.subjects.OrderBy(x => x.Subject_Name).ToList();
         }
 
-        public IEnumerable<Faculty> GetAssignMentor()
+        public FacMentor GetAssignMentor()
         {
             var fac = db.faculties.ToList();
             var men = db.mentors.ToList();
@@ -82,7 +99,10 @@ namespace VGEC.ViewModel
             {
                 fac.Remove(db.faculties.FirstOrDefault(x=>x.Fac_Id==item.Fac_Id));
             }
-            return fac;
+            FacMentor facMentor = new FacMentor();
+            facMentor.faculties = fac;
+            facMentor.mentors = men;
+            return facMentor;
         }
 
         public Faculty GetFaculty(int fac_id)

@@ -1,25 +1,32 @@
-﻿@model IEnumerable<VGEC.Models.Faculty>
+﻿@model VGEC.ViewModel.FacMentor
 @{
     Layout = "~/Views/Shared/_LoginAdmin.cshtml";
 }
-@{
-    List<int> a= new List<int>();
+<style>
+    .row {
+        margin: 1%
+    }
+</style>
+@using (Html.BeginForm())
+{
+
+    List<int> a = new List<int>();
     int year = DateTime.Now.Year - 8;
-    for(int i=year;i<=year+8;i++)
+    for (int i = year; i <= year + 8; i++)
     {
         a.Add(i);
     }
-}
+
     <div class="row">
         <div class="com-sm-2">
 
         </div>
         <div class="com-sm-8">
             <div class="col-sm-6">
-                @Html.Label("Class Id");
+                @Html.Label("C_ID", "Class Id");
             </div>
             <div class="col-sm-6">
-                @Html.DropDownList("Class Id",new SelectList(a),new { @class="form-control"})
+                @Html.DropDownList("C_ID", new SelectList(a), new { @class = "form-control" })
             </div>
         </div>
         <div class="com-sm-2">
@@ -34,13 +41,13 @@
         </div>
         <div class="com-sm-8">
             <div class="col-sm-6">
-                @Html.Label("Faculty Name");
+                @Html.Label("UserName", "Faculty Name");
             </div>
             <div class="col-sm-6">
-                <select class="form-control">
-                    @foreach (var item in Model)
+                <select class="form-control" name="Fac_Id">
+                    @foreach (var item in Model.faculties)
                     {
-                        <option>@item.UserName</option>
+                        <option value="@item.Fac_Id">@item.UserName</option>
                     }
                 </select>
             </div>
@@ -56,14 +63,55 @@
         </div>
         <div class="com-sm-8">
             <div class="col-sm-6">
-                @Html.Label("Semester");
+                @Html.Label("Sem");
             </div>
             <div class="col-sm-6">
-                @Html.DropDownList("Class Id", new SelectList(new List<int>() { 1,2,3,4,5,6,7,8}), new { @class = "form-control" })
+                @Html.DropDownList("Sem", new SelectList(new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 }), new { @class = "form-control", @name = "Sem" })
             </div>
         </div>
         <div class="com-sm-2">
 
         </div>
-
     </div>
+    <div class="row">
+        <div class="com-sm-4">
+
+        </div>
+        <div class="com-sm-4">
+            <button type="submit" class="btn btn-default">Assing Mentor</button>
+        </div>
+        <div class="com-sm-4">
+
+        </div>
+    </div>
+}
+
+<hr />
+<h1>Mentor List</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sr.No</th>
+            <th>Mentor Name</th>
+            <th>CLass Id</th>
+            <th>Semester</th>
+        </tr>
+    </thead>
+    @if (Session["user"] != null && Model.mentors != null)
+    {
+        int i = 1;
+        foreach (var item in Model.mentors)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@item.UserName</td>
+                <td>@item.C_Id</td>
+                <td>@item.Sem</td>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = item.Fac_Id })</td>
+                <td>@Html.ActionLink("Delete", "Delete", new { id = item.Fac_Id }, new { onclick = "return confirm('Are sure wants to delete?');" })</td>
+            </tr>
+            i++;
+        }
+
+    }
+</table>
