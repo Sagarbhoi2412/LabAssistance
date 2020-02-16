@@ -18,6 +18,7 @@ namespace VGEC.App_Start
            builer.RegisterControllers(typeof(MvcApplication).Assembly);
             builer.RegisterType<VgecDbContext>().InstancePerRequest();
             builer.RegisterType<AdminViewModal>().As<IAdminViewModel>().InstancePerRequest();
+            builer.RegisterType<FacultyViewModel>().As<IFacultyViewModel>().InstancePerRequest();
             var container = builer.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

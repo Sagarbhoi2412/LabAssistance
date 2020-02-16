@@ -55,8 +55,14 @@ namespace VGEC.ViewModel
         {
             try
             {
-                db.faculties.Remove(GetFaculty(fac_id));
-                db.mentors.Remove(db.mentors.Find(fac_id));
+                Mentor m = db.mentors.FirstOrDefault(x=>x.Fac_Id==fac_id);
+                if (m != null)
+                {
+                    db.mentors.Remove(m);
+                    if(GetFaculty(fac_id)!=null)
+                    db.faculties.Remove(GetFaculty(fac_id));
+
+                }
                 db.SaveChanges();
             }
             catch
